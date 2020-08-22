@@ -12,10 +12,13 @@ root.iconphoto(False, PhotoImage(file="github.png"))
 def show_repo(user):
 	repos = get_repos(user)
 	j = 0
-	# table heading:
-	Label(repo_group, text='Name').grid(row=j, column=0)
-	Label(repo_group, text='Watchers').grid(row=j, column=1)
-	Label(repo_group, text='Forks').grid(row=j, column=2)
+	if len(repos) == 0:
+		Label(repo_group, text='No Repository found', bg='#f54049', fg='#ffffff', width=30).grid(row=0, column=0, columnspan=3)
+	else:
+		# table heading:
+		Label(repo_group, text='Name').grid(row=j, column=0)
+		Label(repo_group, text='Watchers').grid(row=j, column=1)
+		Label(repo_group, text='Forks').grid(row=j, column=2)
 	j += 1
 	# repo data
 	for repo in repos:
@@ -54,6 +57,7 @@ def display_user():
 				l = Label(user_group, text=value, width=30)
 				l.grid(row=i, column=1)
 			i += 1
+		user_group.grid(row=3, column=0, columnspan=3, pady=10)
 		Button(user_group, text='Show Repos', width=30, padx=20, pady=5,
 		 fg='#ffffff', bg='#5ca9d6', command=lambda: show_repo(username)).grid(row=i, column=0, columnspan=2)
 		
@@ -77,12 +81,11 @@ user_e = Entry(root, width=50, borderwidth=3)
 user_e.grid(row=1, column=1, columnspan=2, padx=10, pady=10, ipady=5)
 # submit button
 search_btn = Button(root, text='Search', width=30, padx=20, pady=5, fg='#ffffff', bg='#5ca9d6', command=display_user)
-search_btn.grid(row=2, column=1, columnspan=2)
+search_btn.grid(row=2, column=1, columnspan=2, pady=5)
 
+# these 2 will be displayed after they get their childs
 user_group = LabelFrame(root, padx=20, pady=5)
-user_group.grid(row=3, column=0, columnspan=3, pady=10)
 
 repo_group = LabelFrame(root, padx=20, pady=5)
-repo_group.grid(row=4, column=0, columnspan=3, pady=10)
 
 root.mainloop()
