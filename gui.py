@@ -1,6 +1,6 @@
 from tkinter import *
 from PIL import ImageTk, Image
-from fetch_data import parse, get_image
+from fetch_data import get_user, get_image, get_repos
 from io import BytesIO
 
 root = Tk()
@@ -16,9 +16,26 @@ user_label.grid(row=1, column=0)
 user_e = Entry(root)
 user_e.grid(row=2, column=0)
 
+def show_repo(user):
+	repos = get_repos(user)
+	j = 10
+	# table heading:
+	Label(root, text='Name').grid(row=j, column=0)
+	Label(root, text='Watchers').grid(row=j, column=1)
+	Label(root, text='Forks').grid(row=j, column=2)
+	j += 1
+	# repo data
+	for repo in repos:
+		Label(root, text=repo.get("name")).grid(row=j, column=0)
+		Label(root, text=repo.get("watchers")).grid(row=j, column=1)
+		Label(root, text=repo.get("forks")).grid(row=j, column=2)
+		j += 1
+	
+
+
 def display_user():
 	username = user_e.get()
-	data = parse(username)
+	data = get_user(username)
 	if data != -1:
 		i = 3
 		for (key, value) in data.items():
@@ -41,6 +58,7 @@ def display_user():
 				l = Label(root, text=value, width=30)
 				l.grid(row=i, column=1)
 			i += 1
+		Button(root, text='Show Repos', command=lambda: show_repo(username)).grid(row=i, column=0)
 
 
 # submit button
