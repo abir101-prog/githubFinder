@@ -17,7 +17,8 @@ def get_user(user):
 	# data that will be displayed
 	filtered_keys = ['avatar_url', 'name', 'public_repos', 'followers', 'following', 'created_at']
 	cleaned_data = {key: content_dict[key] if content_dict[key] != None else 'Not given' for key in filtered_keys}
-	
+	# fixing date
+	cleaned_data['created_at'] = cleaned_data['created_at'][:10]
 	return cleaned_data
 
 

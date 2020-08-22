@@ -4,17 +4,7 @@ from fetch_data import get_user, get_image, get_repos
 from io import BytesIO
 
 root = Tk()
-
-# title
-title = Label(root, text='GitHub User Finder!')
-title.grid(row=0, column=0, columnspan=2)
-
-user_label = Label(root, text='Enter username')
-user_label.grid(row=1, column=0)
-
-# entry for username
-user_e = Entry(root)
-user_e.grid(row=2, column=0)
+root.title('GitHub Finder')
 
 def show_repo(user):
 	repos = get_repos(user)
@@ -61,9 +51,18 @@ def display_user():
 		Button(root, text='Show Repos', command=lambda: show_repo(username)).grid(row=i, column=0)
 
 
-# submit button
-btn = Button(root, text='search', command=display_user)
-btn.grid(row=2, column=1)
+# title
+title = Label(root, text='GitHub User Finder!')
+title.grid(row=0, column=0, columnspan=3)
 
+user_label = Label(root, text='Enter username')
+user_label.grid(row=1, column=0)
+
+# entry for username
+user_e = Entry(root, width=50, borderwidth=3)
+user_e.grid(row=1, column=1, columnspan=2, padx=10, pady=10, ipady=5)
+# submit button
+btn = Button(root, text='Search', width=30, padx=20, pady=5, fg='#ffffff', bg='#5ca9d6', command=display_user)
+btn.grid(row=2, column=1, columnspan=2)
 
 root.mainloop()
